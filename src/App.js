@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const App: React.FC = () => {
+const App = () => {
   const classes = useStyles();
   return (
     <Router>   

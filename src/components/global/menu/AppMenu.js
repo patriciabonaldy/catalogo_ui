@@ -1,25 +1,25 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import List from "@material-ui/core/List";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 import {classes}  from './styles';
 import axios from '../../../axios-catalogo';
 import AppMenuItem from "./AppMenuItem";
-import cuboReducer from '../../../store/reducers/tables';
 import * as actions from '../../../store/actions';
 
 
 const AppMenu = () => {
   const [menu, setMenu] = useState([]);
   const [cuboFiltered, setCuboFiltered] = useState([]);
-  const [cubos, dispatch] = useReducer(cuboReducer, []);
+  const dispatch = useDispatch();
  
   useEffect(() => {
-    axios.get( 'https://catalogo-7342a.firebaseio.com/cubo.json')
+    axios.get( 'https://catalogo-7342a.firebaseio.com/tables.json')
     .then(response => response)
     .then(response => { 
         let listCubos = response.data.filter(function(cubo) {
-          return cubo.ALIAS !== undefined; 
+          return cubo.alias !== undefined; 
         });   
         setMenu(listCubos);
         setCuboFiltered(listCubos);
@@ -34,16 +34,24 @@ const AppMenu = () => {
     
   }, []); 
   
-  //TODO: revisar
+  
   function onChangeInput(event) {
     let value = event.target.value;
     let item = menu.filter(function(item) {
-      return item.ALIAS.toUpperCase().match(value.toUpperCase()); // === value.toUpperCase();
+      return item.alias.toUpperCase().match(value.toUpperCase()); // === value.toUpperCase();
     });
     setCuboFiltered(item);
   }
 
+  function setCubo(cubo){
+    dispatch({
+      type: actions.SET_CUBO,
+      cuboSelected: cubo
+    });
+  }
+
   return (
+    
     <>
       <div className={classes.search}>
         <div className={classes.searchIcon}>
@@ -63,7 +71,7 @@ const AppMenu = () => {
       <List component="nav" className={classes.appMenu}>
         { 
           cuboFiltered.map((cubo, index) => (
-            <AppMenuItem {...cubo} key={index} />
+            <AppMenuItem {...cubo} key={index} setCubo={setCubo}/>
           ))
         }
       </List>

@@ -16,7 +16,7 @@ const cuboReducer = ( state = initialState, action ) => {
         case actionTypes.SET_CUBO:
             return {
                 ...state,
-                cuboSelected: action.cubo
+                cuboSelected: action.cuboSelected
             }    
         case actionTypes.STORE_TABLE_ADD:
             return {

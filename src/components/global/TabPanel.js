@@ -1,4 +1,5 @@
 import React, {useEffect}  from "react";
+import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -7,6 +8,8 @@ import Tab from "@material-ui/core/Tab";
 import PersonPinIcon from "@material-ui/icons/PersonPin";
 import Container from "@material-ui/core/Container";
 import { Icon } from "semantic-ui-react";
+import axios from '../../axios-catalogo';
+import * as actions from '../../store/actions';
 
 import Cubo from "../cubos/Cubo";
 import Atributo from "../atributos/Atributo";
@@ -83,9 +86,18 @@ export default function Setting(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const cubo = props.match.params.cubo;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     console.log(cubo);
+    axios.get( 'https://catalogo-7342a.firebaseio.com/columns.json')
+    .then(response => response)
+    .then(response => { 
+        dispatch({
+          type: actions.STORE_COLUMN,
+          columns: response.data
+        });
+    } )
   }, [cubo]); 
 
   const handleChange = (event, newValue) => {
@@ -119,7 +131,7 @@ export default function Setting(props) {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <Cubo idCubo={cubo} />
+        <Cubo />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Atributo />

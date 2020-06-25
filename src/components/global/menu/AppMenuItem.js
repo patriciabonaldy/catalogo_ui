@@ -17,7 +17,7 @@ import IconExpandMore from "@material-ui/icons/ExpandMore";
 import { Icon } from "semantic-ui-react";
 
 export const AppMenuItemPropTypes = {
-  ALIAS: PropTypes.string.isRequired,
+  alias: PropTypes.string.isRequired,
   Icon: PropTypes.elementType,
   items: PropTypes.array,
   isRoot: PropTypes.bool,
@@ -25,7 +25,8 @@ export const AppMenuItemPropTypes = {
 };
 
 const AppMenuItem: FC<AppMenuItemPropTypes> = props => {
-  const { ALIAS, items, TABLE_NAME, isRoot = [] } = props;
+  const { alias, items, table_name, isRoot = [] } = props;
+  const cubo = props;
   const Icono = "th"
   const classes = useStyles();
   const isExpandable = items && items.length > 0;
@@ -34,13 +35,18 @@ const AppMenuItem: FC<AppMenuItemPropTypes> = props => {
   
   function handleClick() {
     setOpen(!open);
+    ;
+  }
+
+  function setCubo() {
+    props.setCubo(cubo);
   }
 
   const MenuItemRoot = (
     <AppMenuItemComponent
       className={classes.menuItem}
       link="/Setting" //{link ? link : null}
-      idCubo={TABLE_NAME}
+      idCubo={table_name}
       onClick={handleClick}
     >
       {!!Icon && (
@@ -48,7 +54,7 @@ const AppMenuItem: FC<AppMenuItemPropTypes> = props => {
           <Icon name={Icono} />
         </ListItemIcon>
       )}
-      <ListItemText primary={ALIAS} inset={!Icon} />
+      <ListItemText primary={alias} inset={!Icon} onClick={setCubo} />
       {isExpandable && !open && <IconExpandMore />}
       {isExpandable && open && <IconExpandLess />}
     </AppMenuItemComponent>

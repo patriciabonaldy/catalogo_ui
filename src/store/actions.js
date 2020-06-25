@@ -13,6 +13,10 @@ export const removeTable = () => ({
     type: STORE_TABLE_REMOVE
 })
 
+export const setCubo = () => ({
+    type: SET_CUBO
+})
+
 export const STORE_COLUMN = 'STORE_COLUMN';
 export const STORE_COLUMN_ADD = 'STORE_COLUMN_ADD';
 export const STORE_COLUMN_REMOVE = 'STORE_COLUMN_REMOVE';

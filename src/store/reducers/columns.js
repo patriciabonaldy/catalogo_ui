@@ -1,7 +1,8 @@
 import * as actionTypes from '../actions';
 
 const initialState = {
-    columnas: []
+    columns: [],
+    columnasSelected: []
 };
 
 const reducer = ( state = initialState, action ) => {
@@ -9,7 +10,7 @@ const reducer = ( state = initialState, action ) => {
         case actionTypes.STORE_COLUMN:
             return {
                 ...state,
-                columnas: state.columnas.concat({id: new Date(), value: action.columna})
+                columns: action.columns
             }
         default:
             return state;     
