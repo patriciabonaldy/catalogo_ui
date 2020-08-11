@@ -16,7 +16,7 @@ pipeline {
         }
         stage('Deliver') {
             steps {
-                sh 'npm run build && npm start'
+                sh 'npm install npm@latest -g && npm run build && npm start'
             }
         }
     }
