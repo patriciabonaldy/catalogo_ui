@@ -1,12 +1,11 @@
 pipeline {
-  agent {
-    docker {
-      image 'node:13.12.0-alpine'
-      args '--network mynet'
-    }
+  agent none
 
-  }
   stages {
+    stage('Initialize'){
+        def dockerHome = tool 'myDocker'
+        env.PATH = "${dockerHome}/bin:${env.PATH}"
+    }
     stage('Build') {
       steps {
         sh 'npm install'
