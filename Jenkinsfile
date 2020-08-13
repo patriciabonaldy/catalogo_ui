@@ -15,6 +15,7 @@ pipeline {
 
   }
   environment {
-    PATH = '"/usr/bin/docker:${env.PATH}"'
+    docker = '"/usr/bin/docker"'
+    PATH = '"$docker:$PATH"'
   }
 }
