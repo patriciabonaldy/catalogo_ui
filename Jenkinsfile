@@ -1,23 +1,26 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:6-alpine'
-            args '-p 3000:3000'
-        }
+  agent {
+    docker {
+      image 'node:6-alpine'
+      args '-p 3000:3000'
     }
-    environment {
-        CI = 'true'
+
+  }
+  stages {
+    stage('Build') {
+      steps {
+        sh 'npm install'
+      }
     }
-    stages {
-        stage('Build') {
-            steps {
-                sh 'npm install'
-            }
-        }
-        stage('Deliver') {
-            steps {
-                sh 'npm install npm@latest -g && npm run build && npm start'
-            }
-        }
+
+    stage('Deliver') {
+      steps {
+        sh 'npm start'
+      }
     }
+
+  }
+  environment {
+    CI = 'true'
+  }
 }
