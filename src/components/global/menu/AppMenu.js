@@ -13,7 +13,7 @@ const AppMenu = () => {
   const [menu, setMenu] = useState([]);
   const [cuboFiltered, setCuboFiltered] = useState([]);
   const dispatch = useDispatch();
- 
+  /* eslint-disable no-alert, no-console */
   useEffect(() => {
     axios.get( 'https://catalogo-7342a.firebaseio.com/tables.json')
     .then(response => response)
@@ -33,6 +33,7 @@ const AppMenu = () => {
     } );
     
   }, []); 
+  /* eslint-enable no-alert */
   
   
   function onChangeInput(event) {

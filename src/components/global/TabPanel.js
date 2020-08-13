@@ -87,7 +87,7 @@ export default function Setting(props) {
   const [value, setValue] = React.useState(0);
   const cubo = props.match.params.cubo;
   const dispatch = useDispatch();
-
+  /* eslint-disable no-alert, no-console */
   useEffect(() => {
     console.log(cubo);
     axios.get( 'https://catalogo-7342a.firebaseio.com/columns.json')
@@ -103,6 +103,7 @@ export default function Setting(props) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  /* eslint-enable no-alert */
 
   return (
     <div className={classes.root}>
