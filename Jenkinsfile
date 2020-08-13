@@ -15,7 +15,8 @@ pipeline {
 
   }
   environment {
-    docker = '"/usr/bin/docker"'
-    PATH = '"$docker:$PATH"'
+    dockerHome = tool 'myDocker'
+    docker = '/usr/bin/docker'
+    PATH = '$docker:$PATH'
   }
 }
