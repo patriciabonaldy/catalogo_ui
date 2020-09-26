@@ -85,11 +85,10 @@ const labelStyle = { fontSize: "12px" };
 export default function Setting(props) {  
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const cubo = props.match.params.cubo;
   const dispatch = useDispatch();
+  
   /* eslint-disable no-alert, no-console */
   useEffect(() => {
-    console.log(cubo);
     axios.get( 'https://catalogo-7342a.firebaseio.com/columns.json')
     .then(response => response)
     .then(response => { 
@@ -98,7 +97,7 @@ export default function Setting(props) {
           columns: response.data
         });
     } )
-  }, [cubo]); 
+  }); 
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

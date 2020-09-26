@@ -1,7 +1,9 @@
 import React, {useEffect}  from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Divider, Form, Grid } from "semantic-ui-react";
 import { makeStyles } from "@material-ui/core/styles";
+import * as actions from '../../store/actions';
+import axios from '../../axios-catalogo';
 
 const useStyles = makeStyles(theme => ({
   "MuiTypography-body1": {
@@ -11,7 +13,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function FormCuboControl() {
   const storeCatalogo = useSelector(store => store);
-  console.log("store "+storeCatalogo);
+  const dispatch = useDispatch()
+  const cuboSelected = storeCatalogo.table.cuboSelected
   const classes = useStyles();
   const [cubo, setCubo] = React.useState({cubo : {alias: "",
                                           OWNER: "",
@@ -25,16 +28,16 @@ export default function FormCuboControl() {
                                           table_name: ""}}
                                           );  
   
-  useEffect(() => {    
-    setCubo({ cubo : storeCatalogo.table.cuboSelected });    
-    
-  }, [storeCatalogo]); 
+  useEffect(() => {   
+    setCubo({ cubo : cuboSelected });    
+  }, [cuboSelected]); 
   
 
   const paramHandleChange = (event, newValue) => {
     let cuboLocal = Object.assign({},cubo.cubo);
     cuboLocal.param = newValue.value;
     setCubo({cubo: cuboLocal});
+    dispatch(actions.setCubo(cuboLocal));
   };
 
   const loghandleChange = (event, newValue) => {
@@ -47,27 +50,39 @@ export default function FormCuboControl() {
     let cuboLocal = Object.assign({},cubo.cubo);
     cuboLocal.alias = newValue.value;
     setCubo({cubo: cuboLocal});
+    dispatch(actions.setCubo(cuboLocal));
   };
 
   const ownerHandleChange = (event, newValue) => {
     let cuboLocal = Object.assign({},cubo.cubo);
     cuboLocal.OWNER = newValue.value;
     setCubo({cubo: cuboLocal});
+    dispatch(actions.setCubo(cuboLocal));
   };
 
   const descriptioHandleChange = (event, newValue) => {
     let cuboLocal = Object.assign({},cubo.cubo);
     cuboLocal.description = newValue.value;
     setCubo({cubo: cuboLocal});
+    dispatch(actions.setCubo(cuboLocal));
   };
-  console.log(cubo)  ;
 
+  const guardarHandle = (event) => {
+    axios.put( '/cubos.json', cubo )
+    .then( response => {
+      console.log(response);
+    } )
+    .catch( error => {
+        //this.setState( { loading: false } );
+        console.log(error);
+    } );
+  };
 
   return (
     <Form className={classes["MuiTypography-body1"]}>
       <Grid columns={2} relaxed="very" stackable>
-        <Form.Input fluid label="Alias" placeholder="Alias" width={7} value={cubo.cubo.alias} onChange={aliasHandleChange}/>
-        <Form.Input fluid label="Owner" placeholder="Owner" width={7} value={cubo.cubo.OWNER} onChange={ownerHandleChange}/>
+        <Form.Input fluid label="Alias" placeholder="Alias" width={7} value={cubo.cubo.alias|| ''} onChange={aliasHandleChange}/>
+        <Form.Input fluid label="Owner" placeholder="Owner" width={7} value={cubo.cubo.OWNER|| ''} onChange={ownerHandleChange}/>
       </Grid>
       <Form.Group>
         <Grid columns={2} relaxed="very" stackable>
@@ -110,8 +125,8 @@ export default function FormCuboControl() {
           </Grid.Column>
         </Grid>
       </Form.Group>
-      <Form.Input label="Descripcion" placeholder="Descripcion" width={14} value= {cubo.cubo.description} onChange={descriptioHandleChange} />
-      <Form.Button>Aceptar</Form.Button>
+      <Form.Input label="Descripcion" placeholder="Descripcion" width={14} value= {cubo.cubo.description|| ''} onChange={descriptioHandleChange} />
+      <Form.Button onClick={guardarHandle}>Aceptar</Form.Button>
     </Form>
   );
 }

@@ -13,8 +13,9 @@ export const removeTable = () => ({
     type: STORE_TABLE_REMOVE
 })
 
-export const setCubo = () => ({
-    type: SET_CUBO
+export const setCubo = (cubo) => ({
+    type: SET_CUBO,
+    cuboSelected: cubo
 })
 
 export const STORE_COLUMN = 'STORE_COLUMN';
