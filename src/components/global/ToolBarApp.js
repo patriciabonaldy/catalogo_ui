@@ -76,7 +76,7 @@ export default function ToolBarApp() {
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-            <span> v 0.1.0</span>
+            <span> v 0.0.1</span>
           </div>
         </Toolbar>
       </AppBar>
