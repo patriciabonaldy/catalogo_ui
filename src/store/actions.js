@@ -5,8 +5,9 @@ export const STORE_TABLE_REMOVE = 'STORE_TABLE_REMOVE';
 
 export const SET_CUBO = 'SET_CUBO';
 
-export const addTable = () => ({
-    type: STORE_TABLE_ADD
+export const addTable = (columns) => ({
+    type: STORE_TABLE_ADD,
+    columnsSelected: columns
 })
 
 export const removeTable = () => ({

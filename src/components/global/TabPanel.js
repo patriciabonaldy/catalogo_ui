@@ -1,5 +1,5 @@
 import React, {useEffect}  from "react";
-import { useDispatch } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -83,12 +83,12 @@ tabStyle.letterSpacing = "-.04em";
 const labelStyle = { fontSize: "12px" };
 
 export default function Setting(props) {  
+  const storeCatalogo = useSelector(store => store);
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const dispatch = useDispatch();
-  
-  /* eslint-disable no-alert, no-console */
-  useEffect(() => {
+  const cuboNameSelected = storeCatalogo.table.cuboSelected.table_name
+  const fecthCuboSelected = () => {
     axios.get( 'https://catalogo-7342a.firebaseio.com/columns.json')
     .then(response => response)
     .then(response => { 
@@ -97,7 +97,9 @@ export default function Setting(props) {
           columns: response.data
         });
     } )
-  }); 
+  };
+  /* eslint-disable no-alert, no-console */
+  useEffect(fecthCuboSelected, [cuboNameSelected]); 
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

@@ -12,6 +12,11 @@ const reducer = ( state = initialState, action ) => {
                 ...state,
                 columns: action.columns
             }
+        case actionTypes.STORE_TABLE_ADD:
+            return {
+                ...state,
+                columnasSelected: action.columnsSelected
+            }    
         default:
             return state;     
     }
